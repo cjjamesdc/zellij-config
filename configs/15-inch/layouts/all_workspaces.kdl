@@ -1,0 +1,58 @@
+// Simplified layout for 15" MacBook - Optimized for smaller screen
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="AI & Terminal" focus=true {
+        pane split_direction="horizontal" {
+            pane size="65%" {
+                name "AI Assistant"
+                command "bash"
+                args "-c" "echo 'AI Assistant Terminal - 15\" MacBook'; bash"
+                focus true
+            }
+            pane size="35%" {
+                name "Terminal"
+                command "bash"
+            }
+        }
+    }
+
+    tab name="System Information" {
+        // Simplified to 2 panes for better readability on smaller screen
+        pane split_direction="horizontal" {
+            pane {
+                name "System Monitor"
+                command "bash"
+                args "-c" "echo 'System Monitor - Press Ctrl+C to exit htop'; htop || top || bash"
+            }
+            pane {
+                name "Notes & Tasks"
+                command "bash"
+                args "-c" "echo 'Notes - Use vim or nano to edit'; vim ~/zellij_notes.txt || nano ~/zellij_notes.txt || bash"
+            }
+        }
+    }
+
+    tab name="Development" {
+        // Simplified to vertical split for better code viewing
+        pane split_direction="vertical" {
+            pane size="70%" {
+                name "Code Editor"
+                command "bash"
+            }
+            pane size="30%" {
+                name "Terminal & Git"
+                command "bash"
+                args "-c" "echo 'Development Terminal'; bash"
+            }
+        }
+    }
+}
