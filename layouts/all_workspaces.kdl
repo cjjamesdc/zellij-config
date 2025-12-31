@@ -1,0 +1,76 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="AI & Terminal" focus=true {
+        pane split_direction="horizontal" {
+            pane size="70%" {
+                name "AI Assistant"
+                command "bash"
+                args "-c" "echo 'AI Assistant Terminal'; bash"
+                focus true
+            }
+            pane size="30%" {
+                name "Terminal"
+                command "bash"
+            }
+        }
+    }
+
+    tab name="System Information" {
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" {
+                pane {
+                    name "System Monitor"
+                    command "bash"
+                    args "-c" "echo 'System Monitor - Press Ctrl+C to exit htop'; htop || bash"
+                }
+                pane {
+                    name "Process Monitor"
+                    command "bash"
+                    args "-c" "echo 'Process Monitor'; watch -n 2 'ps aux --sort=-%cpu | head -20' || bash"
+                }
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    name "System Logs"
+                    command "bash"
+                    args "-c" "echo 'System Logs'; tail -f /var/log/syslog || journalctl -f || bash"
+                }
+                pane {
+                    name "Notes"
+                    command "bash"
+                    args "-c" "echo 'Notes - Use vim or nano to edit'; vim ~/zellij_notes.txt || nano ~/zellij_notes.txt || bash"
+                }
+            }
+        }
+    }
+
+    tab name="Development" {
+        pane split_direction="vertical" {
+            pane {
+                name "Code Editor"
+                command "bash"
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    name "File Explorer"
+                    command "bash"
+                    args "-c" "echo 'File Explorer'; ranger || mc || ls -la || bash"
+                }
+                pane {
+                    name "Git Status"
+                    command "bash"
+                    args "-c" "echo 'Git Status'; watch -n 5 'git status --porcelain || echo \"Not a git repository\"' || bash"
+                }
+            }
+        }
+    }
+}
